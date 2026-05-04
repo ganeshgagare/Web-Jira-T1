@@ -3,9 +3,10 @@ providers = ["java"]
 
 [variables]
 MAVEN_OPTS = "-Xmx512m"
+JAVA_OPTS = "-Xmx384m -Xms256m"
 
 [phases.build]
 cmds = ["mvn clean package -DskipTests"]
 
 [start]
-cmd = "java -jar target/*.jar"
+cmd = "java $JAVA_OPTS -jar target/*.jar"
