@@ -1,0 +1,11 @@
+# Railway Nixpacks config for backend
+providers = ["java"]
+
+[variables]
+MAVEN_OPTS = "-Xmx512m"
+
+[phases.build]
+cmds = ["mvn clean package -DskipTests"]
+
+[start]
+cmd = "java -jar target/*.jar"
