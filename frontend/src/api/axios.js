@@ -1,7 +1,14 @@
 import axios from 'axios';
 
+let baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
+
+// Force absolute URL if protocol is missing
+if (baseUrl && !baseUrl.startsWith('http')) {
+  baseUrl = `https://${baseUrl}`;
+}
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',
+  baseURL: baseUrl,
 });
 
 api.interceptors.request.use((config) => {
