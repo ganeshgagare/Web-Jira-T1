@@ -1,10 +1,16 @@
 import axios from 'axios';
 
-let baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
+let baseUrl = import.meta.env.VITE_API_URL || '/api';
 
-// Force absolute URL if protocol is missing
-if (baseUrl && !baseUrl.startsWith('http')) {
-  baseUrl = `https://${baseUrl}`;
+// If it looks like a domain but missing protocol, fix it
+if (baseUrl && !baseUrl.startsWith('http') && baseUrl.includes('.')) {
+  baseUrl = `https://${baseUrl.startsWith('/') ? baseUrl.substring(1) : baseUrl}`;
+}
+
+// Ensure it ends with /api but not /api/
+if (baseUrl.endsWith('/')) baseUrl = baseUrl.slice(0, -1);
+if (!baseUrl.endsWith('/api') && baseUrl !== '/api') {
+  baseUrl = `${baseUrl}/api`;
 }
 
 const api = axios.create({
